@@ -19,7 +19,7 @@
         const params = new URLSearchParams(window.location.search);
         const urlTheme = params.get("theme");
         const savedTheme = window.localStorage.getItem(themeKey);
-        const selected = validThemes.has(urlTheme) ? urlTheme : (validThemes.has(savedTheme) ? savedTheme : null);
+        const selected = validThemes.has(savedTheme) ? savedTheme : (validThemes.has(urlTheme) ? urlTheme : null);
         if (selected) {
           document.body.dataset.theme = selected;
           if (selected !== savedTheme) {

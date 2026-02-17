@@ -625,8 +625,8 @@ function initThemeSwitcher() {
   try {
     urlTheme = getThemeFromUrl();
     const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-    savedTheme = urlTheme || storedTheme || "neo";
-    if (urlTheme && storedTheme !== urlTheme) {
+    savedTheme = storedTheme || urlTheme || "neo";
+    if (!storedTheme && urlTheme) {
       window.localStorage.setItem(THEME_STORAGE_KEY, urlTheme);
     }
   } catch (error) {
@@ -637,7 +637,7 @@ function initThemeSwitcher() {
   window.addEventListener("pageshow", () => {
     let latestTheme = "neo";
     try {
-      latestTheme = getThemeFromUrl() || window.localStorage.getItem(THEME_STORAGE_KEY) || "neo";
+      latestTheme = window.localStorage.getItem(THEME_STORAGE_KEY) || getThemeFromUrl() || "neo";
     } catch (error) {
       latestTheme = "neo";
     }
