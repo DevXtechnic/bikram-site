@@ -14,13 +14,17 @@
   <script>
     (() => {
       try {
+        const validThemes = new Set(["neo", "mint", "sunset", "midnight", "ember", "arctic", "grape", "toxic", "ocean", "bloodmoon", "liquidglass", "paper", "blackflag"]);
+        const themeKey = "neoThemeVariant.v1";
         const params = new URLSearchParams(window.location.search);
         const urlTheme = params.get("theme");
-        const savedTheme = window.localStorage.getItem("neoThemeVariant.v1");
-        if (savedTheme) {
-          document.body.dataset.theme = savedTheme;
-        } else if (urlTheme) {
-          document.body.dataset.theme = urlTheme;
+        const savedTheme = window.localStorage.getItem(themeKey);
+        const selected = validThemes.has(urlTheme) ? urlTheme : (validThemes.has(savedTheme) ? savedTheme : null);
+        if (selected) {
+          document.body.dataset.theme = selected;
+          if (selected !== savedTheme) {
+            window.localStorage.setItem(themeKey, selected);
+          }
         }
       } catch (error) {
         // ignore

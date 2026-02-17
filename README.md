@@ -1,44 +1,57 @@
-# Bikram Personal Website
+# Bikram Gole - Personal Website
 
-Playful dark-themed personal website for **Bikram Gole**.
+This is my personal website.
+I built it as a chaotic-fun, space-themed profile to show my personality, interests, and coding vibe.
 
-## Stack
+Live URL: `https://devxtechnic.github.io/bikram-site/`
+
+## What I put in this site
+
+- Multi-page setup: Home, About, Contact
+- Theme engine with multiple visual modes
+- Persistent theme across all pages
+- Mini terminal with commands
+- Persona quiz game
+- Live GitHub repo cards from `github.com/DevXtechnic`
+- Custom interactions, pulse effects, and easter eggs
+
+## Tech stack
 
 - HTML
 - CSS
-- JavaScript
-- GitHub API (to show latest repos)
+- Vanilla JavaScript
+- GitHub Pages for hosting
+- GitHub API for repo fetch
 
-## Pages
+## Project structure
 
-- `index.html` - Home + live GitHub repos
-- `about.html` - Personal story and profile
-- `contact.html` - Email and GitHub links
+- `index.html` -> home page
+- `about.html` -> profile + identity snapshot
+- `contact.html` -> contact links
+- `styles.css` -> all styling and themes
+- `script.js` -> interactions, effects, terminal, quiz, and theme logic
 
 ## Run locally
-
-Open `index.html` directly, or run a local server:
 
 ```bash
 cd bikram-site
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`.
+Open `http://localhost:8000`.
 
 ## Deploy to GitHub Pages
 
-1. Create a GitHub repo (recommended name: `DevXtechnic.github.io` for user site).
-2. Upload all files from this folder to the repo root.
-3. On GitHub, go to `Settings -> Pages`.
-4. Under `Build and deployment`, set:
-   - `Source`: `Deploy from a branch`
-   - `Branch`: `main` and `/ (root)`
-5. Save and wait 1-2 minutes.
-6. Visit your site URL shown in Pages settings.
+1. Push this repo to GitHub.
+2. Open repository `Settings -> Pages`.
+3. Set `Source` to `Deploy from a branch`.
+4. Select branch `main` and folder `/ (root)`.
+5. Save and wait for deployment.
 
-If repo name is `DevXtechnic.github.io`, URL will be:
-`https://devxtechnic.github.io/`
-
-If repo name is something else (example `bikram-site`), URL will be:
+My deployed path is:
 `https://devxtechnic.github.io/bikram-site/`
+
+## Notes
+
+- `.nojekyll` is included so GitHub Pages serves files directly without Jekyll processing.
+- Theme selection is saved in `localStorage` and synced through URL params for page-to-page consistency.

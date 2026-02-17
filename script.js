@@ -621,8 +621,14 @@ function applyTheme(theme, notify = false) {
 
 function initThemeSwitcher() {
   let savedTheme = "neo";
+  let urlTheme = null;
   try {
-    savedTheme = getThemeFromUrl() || window.localStorage.getItem(THEME_STORAGE_KEY) || "neo";
+    urlTheme = getThemeFromUrl();
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    savedTheme = urlTheme || storedTheme || "neo";
+    if (urlTheme && storedTheme !== urlTheme) {
+      window.localStorage.setItem(THEME_STORAGE_KEY, urlTheme);
+    }
   } catch (error) {
     savedTheme = "neo";
   }
@@ -631,12 +637,19 @@ function initThemeSwitcher() {
   window.addEventListener("pageshow", () => {
     let latestTheme = "neo";
     try {
-      latestTheme = window.localStorage.getItem(THEME_STORAGE_KEY) || "neo";
+      latestTheme = getThemeFromUrl() || window.localStorage.getItem(THEME_STORAGE_KEY) || "neo";
     } catch (error) {
       latestTheme = "neo";
     }
     if (latestTheme !== currentTheme) {
       applyTheme(latestTheme, false);
+    }
+  });
+  window.addEventListener("storage", (event) => {
+    if (event.key !== THEME_STORAGE_KEY || !event.newValue) return;
+    if (!THEME_OPTIONS.includes(event.newValue)) return;
+    if (event.newValue !== currentTheme) {
+      applyTheme(event.newValue, false);
     }
   });
   headerThemeSelect?.addEventListener("change", (event) => {
@@ -914,9 +927,9 @@ function runTerminalCommand(rawCommand) {
     scrollToSection("hero-zone");
     appendTerminalLine("Jumped to home.");
   } else if (action === "about") {
-    window.location.href = "about.html";
+    navigateToPage("about.html");
   } else if (action === "contact") {
-    window.location.href = "contact.html";
+    navigateToPage("contact.html");
   } else if (action === "github") {
     window.open("https://github.com/DevXtechnic", "_blank", "noopener,noreferrer");
     appendTerminalLine("Opened GitHub profile.");
@@ -1227,6 +1240,11 @@ function runOrNavigate(sectionId, actionKey = "") {
   window.location.href = targetUrl;
 }
 
+function navigateToPage(path) {
+  const nextUrl = applyThemeToUrl(path, currentTheme);
+  window.location.href = nextUrl;
+}
+
 function initAiConstellationTagline() {
   if (page !== "home") return;
   const tagEl = document.querySelector("#ai-constellation .chaos-card.c4 p");
@@ -1297,8 +1315,8 @@ function initCommandPalette() {
     { label: "Mode: Toggle Chill Music", keywords: "music chill funk mode", run: () => toggleFunkAudio() },
     { label: "Mode: Toggle Elon Warp", keywords: "elon warp mode", run: () => toggleElonMode() },
     { label: "Open: GitHub Profile", keywords: "github profile devxtechnic", run: () => window.open("https://github.com/DevXtechnic", "_blank", "noopener,noreferrer") },
-    { label: "Open: About Page", keywords: "about page profile", run: () => { window.location.href = "about.html"; } },
-    { label: "Open: Contact Page", keywords: "contact email", run: () => { window.location.href = "contact.html"; } },
+    { label: "Open: About Page", keywords: "about page profile", run: () => navigateToPage("about.html") },
+    { label: "Open: Contact Page", keywords: "contact email", run: () => navigateToPage("contact.html") },
   ];
 
   let visibleCommands = commands.slice();
