@@ -1923,9 +1923,12 @@ kbd {
 }
 
 .contact-logo svg {
-  width: 0.72rem;
-  height: 0.72rem;
+  width: 0.78rem;
+  height: 0.78rem;
   display: block;
+}
+
+.contact-logo svg.mono-icon {
   fill: currentColor;
 }
 
