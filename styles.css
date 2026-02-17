@@ -2090,6 +2090,102 @@ body[data-theme="liquidglass"] .easter-toast {
   backdrop-filter: blur(14px) saturate(146%);
 }
 
+body[data-theme="liquidglass"] .noise {
+  opacity: 0.09;
+  background-image:
+    radial-gradient(rgba(225, 240, 255, 0.24) 0.55px, transparent 0.55px),
+    linear-gradient(120deg, rgba(142, 203, 255, 0.06), rgba(255, 178, 128, 0.04));
+  background-size: 2px 2px, 100% 100%;
+}
+
+body[data-theme="liquidglass"] .hero,
+body[data-theme="liquidglass"] .panel,
+body[data-theme="liquidglass"] .chaos-card,
+body[data-theme="liquidglass"] .favorite-card,
+body[data-theme="liquidglass"] .fact-card,
+body[data-theme="liquidglass"] .glass-card,
+body[data-theme="liquidglass"] .repo-card,
+body[data-theme="liquidglass"] .contact-item,
+body[data-theme="liquidglass"] .mini-terminal,
+body[data-theme="liquidglass"] .quiz-board,
+body[data-theme="liquidglass"] .command-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+body[data-theme="liquidglass"] .hero::before,
+body[data-theme="liquidglass"] .panel::before,
+body[data-theme="liquidglass"] .chaos-card::before,
+body[data-theme="liquidglass"] .favorite-card::before,
+body[data-theme="liquidglass"] .fact-card::before,
+body[data-theme="liquidglass"] .glass-card::before,
+body[data-theme="liquidglass"] .repo-card::before,
+body[data-theme="liquidglass"] .contact-item::before,
+body[data-theme="liquidglass"] .mini-terminal::before,
+body[data-theme="liquidglass"] .quiz-board::before,
+body[data-theme="liquidglass"] .command-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(520px 160px at -12% -26%, rgba(255, 255, 255, 0.26), transparent 60%),
+    radial-gradient(360px 130px at 110% 122%, rgba(255, 198, 145, 0.11), transparent 68%);
+}
+
+body[data-theme="liquidglass"] .hero::after,
+body[data-theme="liquidglass"] .panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(116deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.02) 34%, rgba(124, 196, 255, 0.08) 62%, rgba(255, 173, 117, 0.07));
+  mix-blend-mode: screen;
+  opacity: 0.52;
+}
+
+body[data-theme="liquidglass"] .chips span,
+body[data-theme="liquidglass"] .theme-top-select,
+body[data-theme="liquidglass"] .theme-cycle-btn {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 2px 14px rgba(9, 26, 53, 0.24);
+}
+
+body[data-theme="liquidglass"] .favorite-card:hover,
+body[data-theme="liquidglass"] .fact-card:hover,
+body[data-theme="liquidglass"] .glass-card:hover,
+body[data-theme="liquidglass"] .repo-card:hover,
+body[data-theme="liquidglass"] .contact-item:hover,
+body[data-theme="liquidglass"] .chaos-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 233, 255, 0.4);
+  box-shadow:
+    0 12px 28px rgba(5, 18, 41, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body[data-theme="liquidglass"] #command-input,
+body[data-theme="liquidglass"] .mini-terminal-form input {
+  border-color: rgba(191, 222, 255, 0.28);
+  background: rgba(8, 18, 35, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+body[data-theme="liquidglass"] #command-input:focus,
+body[data-theme="liquidglass"] .mini-terminal-form input:focus {
+  border-color: rgba(211, 232, 255, 0.48);
+  box-shadow: 0 0 0 3px rgba(132, 189, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body[data-theme="liquidglass"] .site-footer {
+  width: min(1100px, 94vw);
+  border: 1px solid rgba(188, 221, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(10, 18, 34, 0.38);
+  backdrop-filter: blur(10px) saturate(128%);
+  padding: 0.52rem 0.8rem;
+}
+
 .easter-toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);

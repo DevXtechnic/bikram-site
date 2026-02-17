@@ -40,17 +40,6 @@ python -m http.server 8000
 
 Open `http://localhost:8000`.
 
-## Deploy to GitHub Pages
-
-1. Push this repo to GitHub.
-2. Open repository `Settings -> Pages`.
-3. Set `Source` to `Deploy from a branch`.
-4. Select branch `main` and folder `/ (root)`.
-5. Save and wait for deployment.
-
-My deployed path is:
-`https://devxtechnic.github.io/bikram-site/`
-
 ## Notes
 
 - `.nojekyll` is included so GitHub Pages serves files directly without Jekyll processing.
