@@ -1,35 +1,44 @@
-# Bikram Gole - Personal Website
+# Bikram Gole - The Aura Website
 
-This is my personal website.
-I built it as a chaotic-fun, space-themed profile to show my personality, interests, and coding vibe.
+Welcome to my personal website, where I mix space vibes, hacker energy, and controlled chaos.
+If it looks dramatic, that is intentional.
 
-Live URL: `https://devxtechnic.github.io/bikram-site/`
+Live site: `https://devxtechnic.github.io/bikram-site/`
 
-## What I put in this site
+## Why this exists
 
-- Multi-page setup: Home, About, Contact
-- Theme engine with multiple visual modes
-- Persistent theme across all pages
+I wanted a website that feels like me:
+
+- Dark, interactive, and slightly unhinged (in a good way)
+- Personal, not corporate
+- Fun enough that people remember it
+- Technical enough that devs nod in approval
+
+## What is inside
+
+- Multi-page setup: `Home`, `About`, `Contact`
+- Theme engine with many styles (including Liquid Glass and chaos modes)
+- Persistent theme across page switches
 - Mini terminal with commands
 - Persona quiz game
 - Live GitHub repo cards from `github.com/DevXtechnic`
-- Custom interactions, pulse effects, and easter eggs
+- Easter eggs, pulse effects, and vibe-heavy UI interactions
 
-## Tech stack
+## Tech stack (aka my weapons)
 
 - HTML
 - CSS
 - Vanilla JavaScript
-- GitHub Pages for hosting
-- GitHub API for repo fetch
+- GitHub Pages (hosting)
+- GitHub API (repo data)
 
-## Project structure
+## Project map
 
-- `index.html` -> home page
-- `about.html` -> profile + identity snapshot
-- `contact.html` -> contact links
-- `styles.css` -> all styling and themes
-- `script.js` -> interactions, effects, terminal, quiz, and theme logic
+- `index.html` -> main landing zone
+- `about.html` -> lore, identity, interests
+- `contact.html` -> direct channels
+- `styles.css` -> all themes + UI styling
+- `script.js` -> interactions, terminal logic, quiz logic, effects
 
 ## Run locally
 
@@ -38,9 +47,10 @@ cd bikram-site
 python -m http.server 8000
 ```
 
-Open `http://localhost:8000`.
+Then open `http://localhost:8000`.
 
-## Notes
+## Notes from me
 
-- `.nojekyll` is included so GitHub Pages serves files directly without Jekyll processing.
-- Theme selection is saved in `localStorage` and synced through URL params for page-to-page consistency.
+- `.nojekyll` is here so GitHub Pages serves files directly without Jekyll surprises.
+- Theme state is stored in `localStorage`, so your selected theme stays consistent.
+- Yes, I over-engineered parts of this for fun. No regrets.
