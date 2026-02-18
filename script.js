@@ -677,6 +677,7 @@ function initPenguinDateBadge() {
 function applyTheme(theme, notify = false) {
   const selected = THEME_OPTIONS.includes(theme) ? theme : "neo";
   currentTheme = selected;
+  document.documentElement.dataset.theme = selected;
   document.body.dataset.theme = selected;
   if (headerThemeSelect) headerThemeSelect.value = selected;
   if (heroName) {

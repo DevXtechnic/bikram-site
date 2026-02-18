@@ -26,6 +26,7 @@ html {
     linear-gradient(160deg, var(--bg-0), var(--bg-1) 45%, var(--bg-2));
 }
 
+:root[data-theme="mint"],
 body[data-theme="mint"] {
   --blue: #66ffcd;
   --blue-2: #b5ffe8;
@@ -34,6 +35,7 @@ body[data-theme="mint"] {
   --border: rgba(101, 229, 190, 0.44);
 }
 
+:root[data-theme="sunset"],
 body[data-theme="sunset"] {
   --blue: #ffa764;
   --blue-2: #ffd0ac;
@@ -42,6 +44,7 @@ body[data-theme="sunset"] {
   --border: rgba(242, 132, 108, 0.45);
 }
 
+:root[data-theme="midnight"],
 body[data-theme="midnight"] {
   --bg-0: #010208;
   --bg-1: #050b1a;
@@ -57,6 +60,7 @@ body[data-theme="midnight"] {
   --header: rgba(3, 7, 18, 0.92);
 }
 
+:root[data-theme="ember"],
 body[data-theme="ember"] {
   --bg-0: #120805;
   --bg-1: #23110a;
@@ -72,6 +76,7 @@ body[data-theme="ember"] {
   --header: rgba(25, 11, 8, 0.9);
 }
 
+:root[data-theme="arctic"],
 body[data-theme="arctic"] {
   --bg-0: #041217;
   --bg-1: #0b2129;
@@ -87,6 +92,7 @@ body[data-theme="arctic"] {
   --header: rgba(6, 18, 24, 0.92);
 }
 
+:root[data-theme="grape"],
 body[data-theme="grape"] {
   --bg-0: #12051a;
   --bg-1: #1f0d2a;
@@ -102,6 +108,7 @@ body[data-theme="grape"] {
   --header: rgba(18, 9, 26, 0.92);
 }
 
+:root[data-theme="toxic"],
 body[data-theme="toxic"] {
   --bg-0: #090f04;
   --bg-1: #121c08;
@@ -117,6 +124,7 @@ body[data-theme="toxic"] {
   --header: rgba(12, 18, 8, 0.92);
 }
 
+:root[data-theme="ocean"],
 body[data-theme="ocean"] {
   --bg-0: #03101b;
   --bg-1: #092138;
@@ -132,6 +140,7 @@ body[data-theme="ocean"] {
   --header: rgba(5, 16, 27, 0.92);
 }
 
+:root[data-theme="bloodmoon"],
 body[data-theme="bloodmoon"] {
   --bg-0: #140506;
   --bg-1: #28090e;
@@ -147,6 +156,7 @@ body[data-theme="bloodmoon"] {
   --header: rgba(24, 7, 10, 0.92);
 }
 
+:root[data-theme="paper"],
 body[data-theme="paper"] {
   --bg-0: #d9c8aa;
   --bg-1: #e8d9be;
@@ -162,6 +172,7 @@ body[data-theme="paper"] {
   --header: rgba(241, 229, 201, 0.94);
 }
 
+:root[data-theme="blackflag"],
 body[data-theme="blackflag"] {
   --bg-0: #070b16;
   --bg-1: #101b32;
@@ -177,6 +188,7 @@ body[data-theme="blackflag"] {
   --header: rgba(10, 18, 36, 0.94);
 }
 
+:root[data-theme="liquidglass"],
 body[data-theme="liquidglass"] {
   --bg-0: #091124;
   --bg-1: #122544;
@@ -206,6 +218,7 @@ body {
   font-family: "Space Grotesk", sans-serif;
   color: var(--ink);
   min-height: 100dvh;
+  padding-bottom: 1.55rem;
   background-color: var(--bg-0);
   background:
     radial-gradient(920px 360px at 14% -12%, rgba(51, 111, 203, 0.36), transparent 62%),
@@ -2086,7 +2099,7 @@ body.browser-vivaldi .penguin-glasses {
 }
 
 .site-footer {
-  margin: 0.72rem auto 1.55rem;
+  margin: 0.72rem auto 0;
   color: var(--muted);
   text-align: center;
   font-size: 0.8rem;

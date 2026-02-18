@@ -24,6 +24,7 @@
         const savedTheme = window.localStorage.getItem(themeKey);
         const selected = validThemes.has(savedTheme) ? savedTheme : (validThemes.has(urlTheme) ? urlTheme : null);
         if (selected) {
+          document.documentElement.dataset.theme = selected;
           document.body.dataset.theme = selected;
           if (selected !== savedTheme) {
             window.localStorage.setItem(themeKey, selected);
