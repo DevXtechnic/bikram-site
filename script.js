@@ -19,13 +19,28 @@ revealElements.forEach((el) => revealObserver.observe(el));
 const canvas = document.getElementById("starfield");
 const ctx = canvas?.getContext("2d");
 let stars = [];
+let lastStarFrame = 0;
+
+function getStarFieldProfile() {
+  const isLiquidGlass = document.body.dataset.theme === "liquidglass";
+  const isConstrained = window.matchMedia?.("(max-width: 820px)")?.matches
+    || window.matchMedia?.("(pointer: coarse)")?.matches
+    || false;
+
+  if (isLiquidGlass && isConstrained) return { density: 0.42, frameBudget: 56 };
+  if (isLiquidGlass) return { density: 0.55, frameBudget: 46 };
+  if (isConstrained) return { density: 0.72, frameBudget: 28 };
+  return { density: 1, frameBudget: 18 };
+}
 
 function resizeCanvas() {
   if (!canvas || !ctx) return;
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const count = Math.min(140, Math.floor((canvas.width * canvas.height) / 17500));
+  const profile = getStarFieldProfile();
+  const baseCount = Math.min(140, Math.floor((canvas.width * canvas.height) / 17500));
+  const count = Math.max(24, Math.floor(baseCount * profile.density));
   stars = Array.from({ length: count }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
@@ -35,12 +50,27 @@ function resizeCanvas() {
   }));
 }
 
-function drawStars() {
+function drawStars(timestamp = 0) {
   if (!canvas || !ctx) return;
+  const profile = getStarFieldProfile();
+  const elapsed = timestamp - lastStarFrame;
+
+  if (document.hidden) {
+    requestAnimationFrame(drawStars);
+    return;
+  }
+
+  if (elapsed < profile.frameBudget) {
+    requestAnimationFrame(drawStars);
+    return;
+  }
+
+  const frameFactor = Math.min(3, Math.max(0.9, elapsed / 16.67));
+  lastStarFrame = timestamp;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   stars.forEach((star) => {
-    star.y += star.speed;
+    star.y += star.speed * frameFactor;
     if (star.y > canvas.height + 4) {
       star.y = -4;
       star.x = Math.random() * canvas.width;
@@ -68,6 +98,10 @@ tiltElements.forEach((card) => {
   };
 
   card.addEventListener("mousemove", (event) => {
+    if (document.body.dataset.theme === "liquidglass") {
+      reset();
+      return;
+    }
     const rect = card.getBoundingClientRect();
     const dx = (event.clientX - rect.left) / rect.width - 0.5;
     const dy = (event.clientY - rect.top) / rect.height - 0.5;
@@ -700,6 +734,7 @@ function applyTheme(theme, notify = false) {
 
   setThemeInUrl(selected);
   updateInternalLinks();
+  resizeCanvas();
   if (notify) showToast(`Theme changed: ${selected}`);
 }
 
@@ -1707,6 +1742,10 @@ async function loadRepos() {
         card.style.removeProperty("--my");
       };
       card.addEventListener("mousemove", (event) => {
+        if (document.body.dataset.theme === "liquidglass") {
+          reset();
+          return;
+        }
         const rect = card.getBoundingClientRect();
         const dx = (event.clientX - rect.left) / rect.width - 0.5;
         const dy = (event.clientY - rect.top) / rect.height - 0.5;
