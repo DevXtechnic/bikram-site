@@ -11,6 +11,9 @@
   --card: rgba(8, 14, 29, 0.78);
   --border: rgba(109, 146, 219, 0.38);
   --header: rgba(4, 8, 18, 0.9);
+  --clean-glow-cyan: rgba(118, 196, 255, 0.35);
+  --clean-glow-orange: rgba(255, 170, 105, 0.22);
+  --clean-shadow: 0 14px 34px rgba(2, 10, 28, 0.3);
 }
 
 body[data-theme="mint"] {
@@ -653,6 +656,7 @@ main,
   position: sticky;
   top: 0.52rem;
   z-index: 24;
+  transition: border-color 180ms ease, box-shadow 220ms ease, background 220ms ease;
 }
 
 .brand-name {
@@ -752,6 +756,7 @@ main {
   border-radius: 11px;
   background: var(--card);
   backdrop-filter: blur(7px);
+  transition: border-color 180ms ease, box-shadow 220ms ease, background 220ms ease;
 }
 
 .skew-left {
@@ -893,7 +898,7 @@ a {
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  transition: transform 145ms ease, background 145ms ease, border-color 145ms ease;
+  transition: transform 145ms ease, background 145ms ease, border-color 145ms ease, box-shadow 180ms ease;
 }
 
 .btn:hover,
@@ -1908,6 +1913,7 @@ body.browser-not-firefox .penguin-avatar {
   background: rgba(8, 14, 29, 0.8);
   padding: 0.58rem;
   transform-style: preserve-3d;
+  transition: border-color 180ms ease, box-shadow 220ms ease, background 180ms ease;
 }
 
 .favorite-card p,
@@ -1974,6 +1980,49 @@ body.browser-not-firefox .penguin-avatar {
   background: rgba(12, 22, 42, 0.96);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .site-header:hover {
+    border-color: rgba(166, 210, 255, 0.52);
+    box-shadow:
+      0 1px 0 rgba(205, 231, 255, 0.16) inset,
+      var(--clean-shadow),
+      0 0 32px var(--clean-glow-cyan);
+  }
+
+  .hero:hover,
+  .panel:hover {
+    border-color: rgba(159, 206, 255, 0.52);
+    box-shadow:
+      var(--clean-shadow),
+      0 0 30px var(--clean-glow-cyan),
+      0 0 46px var(--clean-glow-orange);
+  }
+
+  .chaos-card:hover,
+  .favorite-card:hover,
+  .fact-card:hover,
+  .glass-card:hover,
+  .repo-card:hover,
+  .contact-item:hover {
+    border-color: rgba(160, 207, 255, 0.52);
+    box-shadow:
+      0 10px 24px rgba(4, 13, 31, 0.34),
+      0 0 22px rgba(104, 184, 255, 0.22);
+  }
+
+  .btn:hover,
+  .egg-btn:hover,
+  .theme-cycle-btn:hover,
+  .theme-top-select:hover {
+    box-shadow: 0 8px 18px rgba(4, 14, 33, 0.35), 0 0 18px rgba(99, 175, 255, 0.22);
+  }
+
+  nav a:hover,
+  nav a.active {
+    box-shadow: 0 0 0 1px rgba(168, 209, 255, 0.24) inset, 0 0 16px rgba(94, 170, 255, 0.18);
+  }
+}
+
 .site-footer {
   margin: 0.72rem auto 1.55rem;
   color: var(--muted);
@@ -2022,6 +2071,14 @@ body[data-theme="liquidglass"] .site-header {
   box-shadow: 0 16px 36px rgba(2, 10, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
+body[data-theme="liquidglass"] .site-header:hover {
+  border-color: rgba(220, 236, 255, 0.45);
+  box-shadow:
+    0 20px 40px rgba(2, 10, 28, 0.45),
+    0 0 40px rgba(151, 206, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
 body[data-theme="liquidglass"] .brand-name {
   font-family: "SF Pro Display", "Inter", "Space Grotesk", sans-serif;
   text-transform: none;
@@ -2059,6 +2116,16 @@ body[data-theme="liquidglass"] .panel {
     var(--card);
   backdrop-filter: blur(18px) saturate(158%);
   box-shadow: 0 16px 36px rgba(2, 10, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+body[data-theme="liquidglass"] .hero:hover,
+body[data-theme="liquidglass"] .panel:hover {
+  border-color: rgba(223, 238, 255, 0.42);
+  box-shadow:
+    0 22px 44px rgba(2, 10, 28, 0.45),
+    0 0 44px rgba(141, 205, 255, 0.24),
+    0 0 62px rgba(255, 184, 134, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 body[data-theme="liquidglass"] .skew-left {
