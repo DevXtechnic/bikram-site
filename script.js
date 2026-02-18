@@ -63,6 +63,8 @@ const tiltElements = document.querySelectorAll(".tilt");
 tiltElements.forEach((card) => {
   const reset = () => {
     card.style.transform = "rotateX(0deg) rotateY(0deg)";
+    card.style.removeProperty("--mx");
+    card.style.removeProperty("--my");
   };
 
   card.addEventListener("mousemove", (event) => {
@@ -70,6 +72,8 @@ tiltElements.forEach((card) => {
     const dx = (event.clientX - rect.left) / rect.width - 0.5;
     const dy = (event.clientY - rect.top) / rect.height - 0.5;
     card.style.transform = `rotateX(${(-dy * 5).toFixed(2)}deg) rotateY(${(dx * 6).toFixed(2)}deg)`;
+    card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+    card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
   });
 
   card.addEventListener("mouseleave", reset);
@@ -1684,12 +1688,16 @@ async function loadRepos() {
     document.querySelectorAll(".repo-card.tilt").forEach((card) => {
       const reset = () => {
         card.style.transform = "rotateX(0deg) rotateY(0deg)";
+        card.style.removeProperty("--mx");
+        card.style.removeProperty("--my");
       };
       card.addEventListener("mousemove", (event) => {
         const rect = card.getBoundingClientRect();
         const dx = (event.clientX - rect.left) / rect.width - 0.5;
         const dy = (event.clientY - rect.top) / rect.height - 0.5;
         card.style.transform = `rotateX(${(-dy * 5).toFixed(2)}deg) rotateY(${(dx * 6).toFixed(2)}deg)`;
+        card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+        card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
       });
       card.addEventListener("mouseleave", reset);
     });

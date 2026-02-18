@@ -656,7 +656,7 @@ main,
   position: sticky;
   top: 0.52rem;
   z-index: 24;
-  transition: border-color 180ms ease, box-shadow 220ms ease, background 220ms ease;
+  transition: border-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 340ms cubic-bezier(0.2, 0.7, 0.2, 1), background 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .brand-name {
@@ -756,7 +756,7 @@ main {
   border-radius: 11px;
   background: var(--card);
   backdrop-filter: blur(7px);
-  transition: border-color 180ms ease, box-shadow 220ms ease, background 220ms ease;
+  transition: border-color 320ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 360ms cubic-bezier(0.2, 0.7, 0.2, 1), background 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .skew-left {
@@ -898,7 +898,7 @@ a {
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  transition: transform 145ms ease, background 145ms ease, border-color 145ms ease, box-shadow 180ms ease;
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1), background 240ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 240ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .btn:hover,
@@ -1913,7 +1913,7 @@ body.browser-not-firefox .penguin-avatar {
   background: rgba(8, 14, 29, 0.8);
   padding: 0.58rem;
   transform-style: preserve-3d;
-  transition: border-color 180ms ease, box-shadow 220ms ease, background 180ms ease;
+  transition: border-color 280ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 340ms cubic-bezier(0.2, 0.7, 0.2, 1), background 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .favorite-card p,
@@ -1938,7 +1938,7 @@ body.browser-not-firefox .penguin-avatar {
   text-decoration: none;
   color: var(--ink);
   min-width: 0;
-  transition: transform 145ms ease, background 145ms ease;
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1), background 240ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .contact-title {
@@ -1985,17 +1985,17 @@ body.browser-not-firefox .penguin-avatar {
     border-color: rgba(166, 210, 255, 0.52);
     box-shadow:
       0 1px 0 rgba(205, 231, 255, 0.16) inset,
-      var(--clean-shadow),
-      0 0 32px var(--clean-glow-cyan);
+      0 12px 28px rgba(2, 10, 28, 0.26),
+      0 0 22px rgba(118, 196, 255, 0.2);
   }
 
   .hero:hover,
   .panel:hover {
     border-color: rgba(159, 206, 255, 0.52);
     box-shadow:
-      var(--clean-shadow),
-      0 0 30px var(--clean-glow-cyan),
-      0 0 46px var(--clean-glow-orange);
+      0 12px 28px rgba(2, 10, 28, 0.28),
+      0 0 22px rgba(118, 196, 255, 0.18),
+      0 0 34px rgba(255, 170, 105, 0.12);
   }
 
   .chaos-card:hover,
@@ -2006,8 +2006,8 @@ body.browser-not-firefox .penguin-avatar {
   .contact-item:hover {
     border-color: rgba(160, 207, 255, 0.52);
     box-shadow:
-      0 10px 24px rgba(4, 13, 31, 0.34),
-      0 0 22px rgba(104, 184, 255, 0.22);
+      0 8px 20px rgba(4, 13, 31, 0.24),
+      0 0 14px rgba(104, 184, 255, 0.14);
   }
 
   .btn:hover,
@@ -2019,7 +2019,45 @@ body.browser-not-firefox .penguin-avatar {
 
   nav a:hover,
   nav a.active {
-    box-shadow: 0 0 0 1px rgba(168, 209, 255, 0.24) inset, 0 0 16px rgba(94, 170, 255, 0.18);
+    box-shadow: 0 0 0 1px rgba(168, 209, 255, 0.22) inset, 0 0 10px rgba(94, 170, 255, 0.14);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body:not([data-theme="liquidglass"]) .chaos-card,
+  body:not([data-theme="liquidglass"]) .favorite-card,
+  body:not([data-theme="liquidglass"]) .fact-card,
+  body:not([data-theme="liquidglass"]) .glass-card,
+  body:not([data-theme="liquidglass"]) .repo-card,
+  body:not([data-theme="liquidglass"]) .contact-item {
+    position: relative;
+    overflow: hidden;
+  }
+
+  body:not([data-theme="liquidglass"]) .chaos-card::before,
+  body:not([data-theme="liquidglass"]) .favorite-card::before,
+  body:not([data-theme="liquidglass"]) .fact-card::before,
+  body:not([data-theme="liquidglass"]) .glass-card::before,
+  body:not([data-theme="liquidglass"]) .repo-card::before,
+  body:not([data-theme="liquidglass"]) .contact-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    background:
+      radial-gradient(260px 180px at var(--mx, 50%) var(--my, 50%), rgba(145, 210, 255, 0.11), transparent 68%),
+      radial-gradient(220px 140px at calc(var(--mx, 50%) + 10%) calc(var(--my, 50%) + 4%), rgba(255, 178, 122, 0.07), transparent 70%);
+  }
+
+  body:not([data-theme="liquidglass"]) .chaos-card:hover::before,
+  body:not([data-theme="liquidglass"]) .favorite-card:hover::before,
+  body:not([data-theme="liquidglass"]) .fact-card:hover::before,
+  body:not([data-theme="liquidglass"]) .glass-card:hover::before,
+  body:not([data-theme="liquidglass"]) .repo-card:hover::before,
+  body:not([data-theme="liquidglass"]) .contact-item:hover::before {
+    opacity: 1;
   }
 }
 
