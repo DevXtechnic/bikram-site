@@ -551,12 +551,14 @@ function initRuntimeCompatibility() {
   const apply = () => {
     const ua = navigator.userAgent || "";
     const isFirefoxLike = ua.includes("Firefox") || ua.includes("LibreWolf");
+    const isVivaldi = /vivaldi/i.test(ua);
     const isSmallViewport = window.matchMedia?.("(max-width: 820px)")?.matches || false;
     const isCoarsePointer = window.matchMedia?.("(pointer: coarse)")?.matches || false;
     const forceTerminalFallback = isSmallViewport || isCoarsePointer;
 
     document.body.classList.toggle("browser-firefox", isFirefoxLike);
     document.body.classList.toggle("browser-not-firefox", !isFirefoxLike);
+    document.body.classList.toggle("browser-vivaldi", isVivaldi);
     document.body.classList.toggle("force-terminal-fallback", forceTerminalFallback);
   };
 
