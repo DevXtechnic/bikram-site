@@ -1808,6 +1808,11 @@ if (quoteBtn && quoteOutput) {
 
 if (launchBtn && quoteOutput && signalCount) {
   launchBtn.addEventListener("click", (event) => {
+    if (document.body.classList.contains("matrix-mode")) {
+      stopMatrixRain();
+      showToast("Pulse override: Matrix rain off.");
+    }
+
     launches += 1;
     signalCount.textContent = String(launches);
     quoteOutput.textContent = `> Aura pulse ${launches} launched from Mars.`;
@@ -1899,6 +1904,7 @@ let matrixContext = null;
 let matrixAnimation = null;
 let matrixDrops = [];
 let matrixResizeHandler = null;
+let matrixViewportResizeHandler = null;
 
 function startMatrixRain() {
   if (matrixCanvas) {
@@ -1913,21 +1919,42 @@ function startMatrixRain() {
 
   matrixResizeHandler = () => {
     if (!matrixCanvas || !matrixContext) return;
-    matrixCanvas.width = window.innerWidth;
-    matrixCanvas.height = window.innerHeight;
-    const columns = Math.floor(matrixCanvas.width / 14);
-    matrixDrops = Array.from({ length: columns }, () => Math.random() * matrixCanvas.height);
+    const viewportWidth = Math.max(
+      1,
+      Math.floor(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 1)
+    );
+    const viewportHeight = Math.max(
+      1,
+      Math.floor(window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || 1)
+    );
+    const pixelRatio = Math.max(1, window.devicePixelRatio || 1);
+
+    matrixCanvas.style.width = `${viewportWidth}px`;
+    matrixCanvas.style.height = `${viewportHeight}px`;
+    matrixCanvas.width = Math.floor(viewportWidth * pixelRatio);
+    matrixCanvas.height = Math.floor(viewportHeight * pixelRatio);
+    matrixContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    const columns = Math.floor(viewportWidth / 14);
+    matrixDrops = Array.from({ length: columns }, () => Math.random() * viewportHeight);
   };
 
   matrixResizeHandler();
   window.addEventListener("resize", matrixResizeHandler);
+  if (window.visualViewport) {
+    matrixViewportResizeHandler = () => matrixResizeHandler?.();
+    window.visualViewport.addEventListener("resize", matrixViewportResizeHandler);
+  }
 
   const chars = "01{}[]<>/\\|$#@";
   const draw = () => {
     if (!matrixCanvas || !matrixContext) return;
+    const pixelRatio = Math.max(1, window.devicePixelRatio || 1);
+    const renderWidth = matrixCanvas.width / pixelRatio;
+    const renderHeight = matrixCanvas.height / pixelRatio;
 
     matrixContext.fillStyle = "rgba(0, 0, 0, 0.08)";
-    matrixContext.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+    matrixContext.fillRect(0, 0, renderWidth, renderHeight);
     matrixContext.fillStyle = "#73ff86";
     matrixContext.font = "13px monospace";
 
@@ -1935,7 +1962,9 @@ function startMatrixRain() {
       const char = chars[Math.floor(Math.random() * chars.length)];
       const x = index * 14;
       matrixContext.fillText(char, x, drop);
-      matrixDrops[index] = drop > matrixCanvas.height && Math.random() > 0.98 ? 0 : drop + 10;
+      matrixDrops[index] = drop > renderHeight && Math.random() > 0.98
+        ? 0
+        : drop + 10;
     });
 
     matrixAnimation = requestAnimationFrame(draw);
@@ -1953,6 +1982,10 @@ function stopMatrixRain() {
   if (matrixResizeHandler) {
     window.removeEventListener("resize", matrixResizeHandler);
     matrixResizeHandler = null;
+  }
+  if (window.visualViewport && matrixViewportResizeHandler) {
+    window.visualViewport.removeEventListener("resize", matrixViewportResizeHandler);
+    matrixViewportResizeHandler = null;
   }
 
   if (matrixCanvas) matrixCanvas.remove();

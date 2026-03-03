@@ -2988,6 +2988,8 @@ body.force-terminal-fallback .pulse-wave {
 .matrix-layer {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100dvh;
   pointer-events: none;
   z-index: 48;
   opacity: 0;
