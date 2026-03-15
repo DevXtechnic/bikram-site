@@ -1075,6 +1075,10 @@ function clearTerminalOutput() {
 
 function typeTextTo(element, text, speed = 36, prefix = "") {
   if (!element) return;
+  if (prefersReducedMotion) {
+    element.textContent = `${prefix}${text || ""}`;
+    return;
+  }
 
   const token = (typewriterTokens.get(element) || 0) + 1;
   typewriterTokens.set(element, token);
