@@ -253,6 +253,26 @@ body {
   overflow-x: hidden;
 }
 
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -3rem;
+  z-index: 120;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(6, 12, 26, 0.92);
+  color: var(--ink);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: top var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  top: 0.85rem;
+  box-shadow: 0 6px 16px rgba(5, 15, 30, 0.4);
+}
+
 body[data-theme="liquidglass"] {
   background:
     radial-gradient(760px 310px at 50% -18%, rgba(237, 246, 255, 0.18), transparent 66%),
@@ -2261,6 +2281,18 @@ body[data-theme="material3"] .avatar-card .android-avatar {
   font-size: 0.8rem;
 }
 
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.section-head .subtitle {
+  margin-top: 0.2rem;
+}
+
 .chaos-grid {
   margin-top: 0.48rem;
   display: grid;
@@ -2281,6 +2313,7 @@ body[data-theme="material3"] .avatar-card .android-avatar {
 .chaos-card.c4 { grid-column: span 3; transform: rotate(-0.7deg); }
 
 .favorite-grid,
+.spotlight-grid,
 .fact-grid,
 .about-grid,
 .repo-grid,
@@ -2292,6 +2325,7 @@ body[data-theme="material3"] .avatar-card .android-avatar {
 }
 
 .favorite-card,
+.spotlight-card,
 .fact-card,
 .glass-card,
 .repo-card,
@@ -2305,6 +2339,7 @@ body[data-theme="material3"] .avatar-card .android-avatar {
 }
 
 .favorite-card p,
+.spotlight-card p,
 .fact-card p,
 .glass-card p,
 .repo-card p,
@@ -2314,6 +2349,22 @@ body[data-theme="material3"] .avatar-card .android-avatar {
   overflow-wrap: anywhere;
   word-break: break-word;
   line-height: 1.38;
+}
+
+.spotlight-card {
+  display: grid;
+  gap: 0.36rem;
+}
+
+.spotlight-card .spotlight-link {
+  color: var(--blue-2);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.spotlight-card .spotlight-link:hover {
+  text-decoration: underline;
 }
 
 .repo-meta {

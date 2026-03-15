@@ -86,6 +86,11 @@ function getStarFieldProfile() {
 
 function resizeCanvas() {
   if (!canvas || !ctx) return;
+  if (prefersReducedMotion) {
+    canvas.style.display = "none";
+    return;
+  }
+  canvas.style.display = "";
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
@@ -138,7 +143,9 @@ function drawStars(timestamp = 0) {
 
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
-requestAnimationFrame(drawStars);
+if (!prefersReducedMotion) {
+  requestAnimationFrame(drawStars);
+}
 
 function attachTiltBehavior(card) {
   let tiltFrame = null;
