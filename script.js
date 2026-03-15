@@ -2,19 +2,58 @@ const page = document.body.dataset.page;
 const navLink = document.querySelector(`[data-nav="${page}"]`);
 if (navLink) navLink.classList.add("active");
 
-const revealElements = document.querySelectorAll(".reveal");
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-        revealObserver.unobserve(entry.target);
+const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
+const revealTargets = new Set([...document.querySelectorAll(".reveal")]);
+
+if (!prefersReducedMotion) {
+  document.querySelectorAll(".tilt-zone").forEach((zone) => {
+    const items = zone.querySelectorAll(".tilt");
+    items.forEach((item, index) => {
+      if (!item.classList.contains("reveal")) {
+        item.classList.add("reveal", "reveal-child");
+        item.style.setProperty("--reveal-delay", `${Math.min(index * 45, 240)}ms`);
+        revealTargets.add(item);
       }
     });
-  },
-  { threshold: 0.16 }
-);
-revealElements.forEach((el) => revealObserver.observe(el));
+  });
+}
+
+const revealElements = [...revealTargets];
+
+if (prefersReducedMotion) {
+  revealElements.forEach((el) => el.classList.add("show"));
+} else {
+  let staged = 0;
+  revealElements.forEach((el) => {
+    const hasDelayClass = Array.from(el.classList).some((cls) => cls.startsWith("delay-"));
+    if (!hasDelayClass && !el.style.getPropertyValue("--reveal-delay")) {
+      el.style.setProperty("--reveal-delay", `${Math.min(staged * 40, 240)}ms`);
+      staged += 1;
+    }
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.16 }
+  );
+  revealElements.forEach((el) => revealObserver.observe(el));
+}
+
+const heroZone = document.getElementById("hero-zone") || document.querySelector(".hero");
+function triggerHeroPulse() {
+  if (!heroZone) return;
+  heroZone.classList.remove("pulse-hit");
+  void heroZone.offsetWidth;
+  heroZone.classList.add("pulse-hit");
+  window.setTimeout(() => heroZone.classList.remove("pulse-hit"), 520);
+}
 
 const canvas = document.getElementById("starfield");
 const ctx = canvas?.getContext("2d");
@@ -1813,6 +1852,7 @@ if (launchBtn && quoteOutput && signalCount) {
       showToast("Pulse override: Matrix rain off.");
     }
 
+    triggerHeroPulse();
     launches += 1;
     signalCount.textContent = String(launches);
     quoteOutput.textContent = `> Aura pulse ${launches} launched from Mars.`;

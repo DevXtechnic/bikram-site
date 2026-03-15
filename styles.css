@@ -16,6 +16,13 @@
   --clean-glow-orange: rgba(255, 170, 105, 0.22);
   --clean-shadow: 0 14px 34px rgba(2, 10, 28, 0.3);
   --page-gutter: 1.15rem;
+  --motion-fast: 140ms;
+  --motion-base: 240ms;
+  --motion-slow: 420ms;
+  --motion-xslow: 760ms;
+  --ease-out: cubic-bezier(0.16, 0.84, 0.28, 1);
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-snap: cubic-bezier(0.2, 0.9, 0.25, 1);
 }
 
 html {
@@ -798,7 +805,7 @@ nav a.active {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 130ms ease, border-color 130ms ease, background 130ms ease;
+  transition: transform var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 }
 
 .theme-cycle-btn:hover {
@@ -817,7 +824,7 @@ main {
   border-radius: 11px;
   background: var(--card);
   backdrop-filter: blur(7px);
-  transition: border-color 320ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 360ms cubic-bezier(0.2, 0.7, 0.2, 1), background 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: border-color var(--motion-base) var(--ease-soft), box-shadow var(--motion-slow) var(--ease-soft), background var(--motion-base) var(--ease-soft);
 }
 
 .skew-left {
@@ -830,6 +837,9 @@ main {
 
 .hero {
   padding: 0.9rem;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   background:
     radial-gradient(430px 140px at 2% 0%, rgba(74, 149, 255, 0.24), transparent 72%),
     radial-gradient(300px 130px at 97% 100%, rgba(255, 154, 67, 0.14), transparent 75%),
@@ -845,6 +855,81 @@ main {
   grid-template-columns: 1.55fr 1fr;
   gap: 0.58rem;
   align-items: stretch;
+  position: relative;
+  z-index: 2;
+}
+
+.hero > *:not(.hero-pulse):not(.hero-motif) {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-pulse {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+  background:
+    radial-gradient(240px 180px at 18% 12%, rgba(132, 210, 255, 0.55), transparent 70%),
+    radial-gradient(320px 220px at 78% 25%, rgba(255, 170, 105, 0.32), transparent 72%);
+  transform: scale(0.92);
+}
+
+.hero.pulse-hit .hero-pulse {
+  animation: hero-pulse var(--motion-slow) var(--ease-snap);
+}
+
+.hero-motif {
+  position: absolute;
+  right: 0.6rem;
+  top: 0.4rem;
+  width: min(44vw, 210px);
+  height: auto;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-motif .motif-line {
+  stroke: rgba(148, 210, 255, 0.6);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: motif-draw 2.6s var(--ease-out) 0.25s both;
+}
+
+.hero-motif .motif-line.secondary {
+  stroke: rgba(255, 188, 122, 0.5);
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
+  animation-delay: 0.45s;
+}
+
+.hero-motif .motif-node {
+  fill: rgba(172, 222, 255, 0.75);
+  animation: motif-node 3.2s ease-in-out infinite;
+}
+
+.hero-motif .motif-node.alt {
+  fill: rgba(255, 198, 138, 0.8);
+  animation-delay: 0.8s;
+}
+
+.name-underline {
+  display: block;
+  margin-top: 0.2rem;
+  width: clamp(120px, 28vw, 240px);
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(133, 202, 255, 0.95), rgba(255, 169, 106, 0.9), transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0.9;
+  animation: line-trace 1.2s var(--ease-out) 0.2s forwards;
 }
 
 .panel {
@@ -2373,18 +2458,72 @@ body[data-theme="material3"] .avatar-card .android-avatar {
 
 .reveal {
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 330ms ease, transform 330ms ease;
+  transform: translateY(12px) scale(0.985);
+  filter: blur(6px);
+  transition: opacity var(--motion-base) var(--ease-out), transform var(--motion-base) var(--ease-out), filter var(--motion-base) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
 }
 
 .reveal.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
-.delay-1 { transition-delay: 60ms; }
-.delay-2 { transition-delay: 120ms; }
-.delay-3 { transition-delay: 180ms; }
+.delay-1 { --reveal-delay: 80ms; }
+.delay-2 { --reveal-delay: 150ms; }
+.delay-3 { --reveal-delay: 220ms; }
+
+.reveal-child {
+  transform-origin: 30% 50%;
+  transform: none;
+}
+
+.reveal.show.reveal-child {
+  transform: none;
+}
+
+@keyframes line-trace {
+  from { transform: scaleX(0); opacity: 0.4; }
+  to { transform: scaleX(1); opacity: 0.95; }
+}
+
+@keyframes motif-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes motif-node {
+  0%, 100% { r: 3; opacity: 0.7; }
+  50% { r: 4.2; opacity: 1; }
+}
+
+@keyframes hero-pulse {
+  0% { opacity: 0; transform: scale(0.94); }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .pulse-wave,
+  .pulse-core-flash,
+  .matrix-layer,
+  .hero-pulse {
+    display: none !important;
+  }
+}
 
 .easter-toast {
   position: fixed;
